@@ -1,19 +1,45 @@
 #include "core_mcu.hpp"
+#include <iostream>
+using namespace std;
 
-int main(){
-    Core_MCU *device1 = new Core_MCU(1.4,512,"ubuntu 22.04","Raspberry Pi",5);
-    Core_MCU *device2 = new Core_MCU(4.6,16512,"windows_11","intel_nuc",5);
+// Constructor
+Core_MCU::Core_MCU(float cpu_speed, int memory, string os, string nama, int volt) {
+    this->cpu_speed = cpu_speed;
+    this->memory = memory;
+    this->os = os;
+    this->nama = nama;
+    this->volt = volt;
 
-    cout << "Ambil OS [nama OS] : "<< device1->get_os() << endl;
+    cout << nama << " dengan OS " << os << " siap digunakan, voltase awal: " << volt << "V" << endl;
+}
 
-    device1->nambah_volt(2);
-    device2->ganti_os("ubuntu 24.04");
+// Menampilkan spesifikasi
+void Core_MCU::showSpek() {
+    cout << "==== SPEK " << nama << " ====" << endl;
+    cout << "CPU Speed: " << cpu_speed << " GHz" << endl;
+    cout << "Memory: " << memory << " MB" << endl;
+    cout << "OS: " << os << endl;
+    cout << "Volt: " << volt << " V" << endl;
+}
 
-    device1->showSpek();
-    device2->showSpek();
+// Menambah volt
+void Core_MCU::nambah_volt(int penambahan_voltase) {
+    volt += penambahan_voltase;
+    cout << "Volt " << nama << " sekarang: " << volt << " V" << endl;
+}
 
-    device1->~Core_MCU();
-    device2->~Core_MCU();
+// Ganti OS
+void Core_MCU::ganti_os(string new_os) {
+    os = new_os;
+    cout << nama << " sekarang menggunakan OS: " << os << endl;
+}
 
-    return 0;
+// Ambil OS
+string Core_MCU::get_os() {
+    return os;
+}
+
+// Destructor
+Core_MCU::~Core_MCU() {
+    cout << nama << " dimatikan dan dihancurkan" << endl;
 }
